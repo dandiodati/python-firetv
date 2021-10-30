@@ -6,8 +6,8 @@ then
 
  cat <<EOF > /config/devices.yaml 
 devices:  
-  $DEVICE_NAME: 
-    host: $DEVICE_HOST 
+  ${DEVICE_NAME:-undefined_device_name}: 
+    host: ${DEVICE_HOST:-undefined_host} 
 EOF
 fi
 
