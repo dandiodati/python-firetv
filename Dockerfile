@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
         swig \
         curl \
         unzip \
-        && curl -L -o /tmp/master.zip https://github.com/happyleavesaoc/python-firetv/archive/master.zip \
+        && curl -L -o /tmp/master.zip https://github.com/dandiodati/python-firetv/archive/master.zip \
         && cd /tmp \
         && unzip master.zip \
         && \
