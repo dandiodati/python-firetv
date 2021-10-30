@@ -10,3 +10,5 @@ devices:
     host: $DEVICE_HOST 
 EOF
 fi
+
+firetv-server -c '/config/devices.yaml'
