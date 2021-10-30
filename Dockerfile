@@ -1,10 +1,11 @@
-FROM python:2
+FROM python:3
 MAINTAINER Jon Bullen
 
 RUN apt-get update && apt-get install -y \
         libssl-dev \
         libusb-1.0-0 \
         python-dev \
+	vim \
         swig \
         curl \
         unzip \
@@ -18,9 +19,9 @@ RUN apt-get update && apt-get install -y \
 RUN pip --no-cache-dir install --upgrade pip
 RUN pip --no-cache-dir install flask adb_shell M2Crypto
 RUN pip install /tmp/python-firetv-master[firetv-server]
-COPY /tmp/startFiretv.sh /usr/local/bin
+COPY startFiretv.sh /usr/local/bin
 
-CMD ["sh", "/usr/local/startFiretv.sh"]
+CMD ["sh", "/usr/local/bin/startFiretv.sh"]
 
 # docker build -t docker-firetv .
 # docker run -it --rm --name docker-firetv -p 5556:5556 docker-firetv
