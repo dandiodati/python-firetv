@@ -270,7 +270,13 @@ def main():
     if args.default and not add('default', args.default, adbkey=adb_key):
         exit('invalid hostname')
 
-    app.run(host='0.0.0.0', port=args.port)
+    from waitress import serve
+    serve(app,host="0.0.0.0", port=args.port)
+
+    """
+     disabled and use waitress for production code 
+     app.run(host='0.0.0.0', port=args.port) 
+    """
 
 
 if __name__ == '__main__':
