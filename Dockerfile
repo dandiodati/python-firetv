@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip --no-cache-dir install --upgrade pip
-RUN pip --no-cache-dir install flask adb_shell M2Crypto waitress
+RUN pip --no-cache-dir install flask pure-python-adb M2Crypto waitress
 RUN pip install /tmp/python-firetv-master[firetv-server]
 COPY startFiretv.sh /usr/local/bin
 
