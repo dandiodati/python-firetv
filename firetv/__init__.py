@@ -15,6 +15,8 @@ import threading
 import ppadb
 
 
+logging.basicConfig(filename='/usr/local/firetv/log/firetv.log', encoding='utf-8', level=logging.DEBUG)
+
 # Install adb shell if we can, then try the others
 USE_ADB_SHELL = False
 try:
@@ -31,7 +33,7 @@ if not USE_ADB_SHELL:
     from adb import adb_commands
     from adb.sign_pythonrsa import PythonRSASigner
     from adb.adb_protocol import InvalidChecksumError
-    from adb_messenger.client import Client as AdbClient
+    from ppadb.client import Client as AdbClient
 
 
 Signer = PythonRSASigner.FromRSAKeyPath
