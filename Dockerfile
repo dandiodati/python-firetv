@@ -21,6 +21,7 @@ RUN pip --no-cache-dir install --upgrade pip
 RUN pip --no-cache-dir install flask pure-python-adb M2Crypto waitress
 RUN pip install /tmp/python-firetv-master[firetv-server]
 COPY startFiretv.sh /usr/local/bin
+RUN mkdir -p /usr/local/firetv/log
 
 CMD ["sh", "/usr/local/bin/startFiretv.sh"]
 

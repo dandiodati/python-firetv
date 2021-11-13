@@ -404,13 +404,14 @@ class FireTV:
             #else:
                 # pure-python-adb
                 try:
+                    logging.debug("Trying to connect server: %s, port: %s", self.adb_server_ip, self.adb_server_port)
                     self._adb_client = AdbClient(host=self.adb_server_ip, port=self.adb_server_port)
                     self._adb_device = self._adb_client.device(self.host)
                     self._available = bool(self._adb_device)
 
                 except:
                     self._available = False
-
+                    logging.error("Failed to connect")    
                 finally:
                     return self._available
 
