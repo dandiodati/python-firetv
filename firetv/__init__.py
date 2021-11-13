@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+
 """
 Communicate with an Amazon Fire TV device via ADB over a network.
 
@@ -11,6 +12,8 @@ import re
 from socket import error as socket_error
 import sys
 import threading
+import ppadb
+
 
 # Install adb shell if we can, then try the others
 USE_ADB_SHELL = False
@@ -178,18 +181,19 @@ class FireTV:
         self._adb_device = None  # pure-python-adb && adb_shell
 
         # the methods used for sending ADB commands
-        if USE_ADB_SHELL:
-            # adb_shell
-            self.adb_shell = self._adb_shell_adb_shell
-            self.adb_streaming_shell = self._adb_shell_adb_shell
-        elif not self.adb_server_ip:
-            # python-adb
-            self.adb_shell = self._adb_shell_python_adb
-            self.adb_streaming_shell = self._adb_streaming_shell_python_adb
-        else:
-            # pure-python-adb
-            self.adb_shell = self._adb_shell_pure_python_adb
-            self.adb_streaming_shell = self._adb_streaming_shell_pure_python_adb
+        #if USE_ADB_SHELL:
+        #    # adb_shell
+        #    self.adb_shell = self._adb_shell_adb_shell
+        #    self.adb_streaming_shell = self._adb_shell_adb_shell
+        #elif not self.adb_server_ip:
+        #    # python-adb
+        #    self.adb_shell = self._adb_shell_python_adb
+        #    self.adb_streaming_shell = self._adb_streaming_shell_python_adb
+        #else:
+        # pure-python-adb
+
+        self.adb_shell = self._adb_shell_pure_python_adb
+        self.adb_streaming_shell = self._adb_streaming_shell_pure_python_adb
 
         # establish the ADB connection
         self.connect()
@@ -346,56 +350,56 @@ class FireTV:
         if self.adbkey:
             signer = Signer(self.adbkey)
         try:
-            if USE_ADB_SHELL:
-                # adb_shell
-                host, _, port = self.host.partition(':')
-                self._adb_device = AdbDeviceTcp(host=host, port=port)
+            #if USE_ADB_SHELL:
+                ## adb_shell
+                #host, _, port = self.host.partition(':')
+                #self._adb_device = AdbDeviceTcp(host=host, port=port)
+#
+                ## Connect to the device
+                #connected = False
+                #from adb_shell.exceptions import DeviceAuthError
+                #try:
+                    #if signer:
+                        #connected = self._adb_device.connect(rsa_keys=[signer])
+                    #else:
+                        #connected = self._adb_device.connect()
+                #except DeviceAuthError as err:
+                    #print("DeviceAuthError:", err)
+#
+                #self._available = connected
+#
+            #elif not self.adb_server_ip:
+                ## python-adb
+                #from adb.usb_exceptions import DeviceAuthError
+                #try:
+                    #if self.adbkey:
+                        #signer = Signer(self.adbkey)
+#
+                        ## Connect to the device
+                        #self._adb = adb_commands.AdbCommands().ConnectDevice(serial=self.host, rsa_keys=[signer], default_timeout_ms=9000)
+                    #else:
+                        #self._adb = adb_commands.AdbCommands().ConnectDevice(serial=self.host, default_timeout_ms=9000)
+#
+                    ## ADB connection successfully established
+                    #self._available = True
+#
+                #except socket_error as serr:
+                    #if self._available or always_log_errors:
+                        #if serr.strerror is None:
+                            #serr.strerror = "Timed out trying to connect to ADB device."
+                        #logging.warning("Couldn't connect to host: %s, error: %s", self.host, serr.strerror)
+#
+                    ## ADB connection attempt failed
+                    #self._adb = None
+                    #self._available = False
+#
+                #except DeviceAuthError as err:
+                    #print("DeviceAuthError:", err)
+#
+                #finally:
+                    #return self._available
 
-                # Connect to the device
-                connected = False
-                from adb_shell.exceptions import DeviceAuthError
-                try:
-                    if signer:
-                        connected = self._adb_device.connect(rsa_keys=[signer])
-                    else:
-                        connected = self._adb_device.connect()
-                except DeviceAuthError as err:
-                    print("DeviceAuthError:", err)
-
-                self._available = connected
-
-            elif not self.adb_server_ip:
-                # python-adb
-                from adb.usb_exceptions import DeviceAuthError
-                try:
-                    if self.adbkey:
-                        signer = Signer(self.adbkey)
-
-                        # Connect to the device
-                        self._adb = adb_commands.AdbCommands().ConnectDevice(serial=self.host, rsa_keys=[signer], default_timeout_ms=9000)
-                    else:
-                        self._adb = adb_commands.AdbCommands().ConnectDevice(serial=self.host, default_timeout_ms=9000)
-
-                    # ADB connection successfully established
-                    self._available = True
-
-                except socket_error as serr:
-                    if self._available or always_log_errors:
-                        if serr.strerror is None:
-                            serr.strerror = "Timed out trying to connect to ADB device."
-                        logging.warning("Couldn't connect to host: %s, error: %s", self.host, serr.strerror)
-
-                    # ADB connection attempt failed
-                    self._adb = None
-                    self._available = False
-
-                except DeviceAuthError as err:
-                    print("DeviceAuthError:", err)
-
-                finally:
-                    return self._available
-
-            else:
+            #else:
                 # pure-python-adb
                 try:
                     self._adb_client = AdbClient(host=self.adb_server_ip, port=self.adb_server_port)
