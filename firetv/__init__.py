@@ -158,7 +158,7 @@ INTENT_HOME = "android.intent.category.HOME"
 class FireTV:
     """Represents an Amazon Fire TV device."""
 
-    def __init__(self, host, adbkey='', adb_server_ip='127.0.0.1', adb_server_port=5037):
+    def __init__(self, host, adbkey='', adb_server_ip, adb_server_port=5037):
         """Initialize FireTV object.
 
         :param host: Host in format <address>:port.
@@ -168,7 +168,7 @@ class FireTV:
         """
         self.host = host
         self.adbkey = adbkey
-        self.adb_server_ip = adb_server_ip
+        self.adb_server_ip = '127.0.0.1'
         self.adb_server_port = adb_server_port
 
         # keep track of whether the ADB connection is intact
