@@ -158,7 +158,7 @@ INTENT_HOME = "android.intent.category.HOME"
 class FireTV:
     """Represents an Amazon Fire TV device."""
 
-    def __init__(self, host, adbkey='', adb_server_ip, adb_server_port=5037):
+    def __init__(self, host, adbkey='', adb_server_ip='', adb_server_port=5037):
         """Initialize FireTV object.
 
         :param host: Host in format <address>:port.
