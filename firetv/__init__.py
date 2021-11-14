@@ -168,7 +168,7 @@ class FireTV:
         """
         self.host = host
         self.adbkey = adbkey
-        self.adb_server_ip = adb_server_ip
+        self.adb_server_ip = '127.0.0.1'
         self.adb_server_port = adb_server_port
 
         # keep track of whether the ADB connection is intact
