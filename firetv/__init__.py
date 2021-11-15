@@ -346,21 +346,16 @@ class FireTV:
 
                     logging.debug("Trying to connect to device: ip: %s, port: %d", device_ip, device_port)
 		    
-                    self._adb_device = self._adb_client.remote_connect(host=device_ip, port=device_port)
-
-                    if not bool(self._adb_device):
+                    status = self._adb_client.remote_connect(host=device_ip, port=device_port)
+                    if not bool(status):
                       logging.debug("Trying to connect second time to device: ip: %s, port: %d", device_ip, device_port)
-                      self._adb_device = self._adb_client.remote_connect(host=device_ip, port=device_port)
+                      status = self._adb_client.remote_connect(host=device_ip, port=device_port)
 
+                    self._adb_device = self._adb_client.device(self.host);
                     self._available = bool(self._adb_device)
                     logging.debug("Device available: %s", str(self._available))
                       
-                except:
-                    try:
-                      logging.debug("Exception connecting again to device: ip: %s, port: %d", device_ip, device_port)
-                      self._adb_device = self._adb_client.remote_connect(host=device_ip, port=device_port)
-                      self._available = bool(self._adb_device)
-                    except Exception as e:
+                except Exception as e:
                       self._available = False
                       logging.error("Failed to connect: %s ", str(e))    
                 finally:
