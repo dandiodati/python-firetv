@@ -11,6 +11,15 @@ devices:
 EOF
 fi
 
+if [ -f /config/keys ]
+then
+
+mkdir /root/.android;
+cp -f /config/keys/* .android;
+fi
+
 adb start-server
+mkdir /config/keys;
+cp -f /root/.android/* /config/keys;
 
 firetv-server -c '/config/devices.yaml'
