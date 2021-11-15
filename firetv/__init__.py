@@ -19,21 +19,9 @@ logging.basicConfig(filename='/usr/local/firetv/log/firetv.log', encoding='utf-8
 
 # Install adb shell if we can, then try the others
 USE_ADB_SHELL = False
-try:
-    from adb_shell.adb_device import AdbDevice, AdbDeviceTcp
-    from adb_shell.auth.sign_pythonrsa import PythonRSASigner
-    from adb_shell.exceptions import InvalidChecksumError
-
-    USE_ADB_SHELL = True
-except:
-    pass
-
-
-if not USE_ADB_SHELL:
-    from adb import adb_commands
-    from adb.sign_pythonrsa import PythonRSASigner
-    from adb.adb_protocol import InvalidChecksumError
-    from ppadb.client import Client as AdbClient
+from adb import adb_commands
+from adb.sign_pythonrsa import PythonRSASigner
+from adb.adb_protocol import InvalidChecksumError
 
 
 Signer = PythonRSASigner.FromRSAKeyPath
@@ -347,6 +335,8 @@ class FireTV:
                 # pure-python-adb
                 try:
                     logging.debug("Trying to connect server: 127.0.0.1:5037")
+                    
+                    from ppadb.client import Client as AdbClient
                     self._adb_client = AdbClient(host="127.0.0.1", port=5037)
                     logging.debug("Created client local server version: %s", self._adb_client.version())
 
@@ -365,9 +355,9 @@ class FireTV:
                       logging.debug("Trying to connect second time to device: ip: %s, port: %s", device_ip, device_port)
                       self._adb_device = self._adb_client.remote_connect(host=device_ip, port=device_port)
                       self._available = bool(self._adb_device)
-                    except:
+                    except Exception as e:
                       self._available = False
-                      logging.error("Failed to connect")    
+                      logging.error("Failed to connect: %s ", e)    
                 finally:
                     return self._available
 
