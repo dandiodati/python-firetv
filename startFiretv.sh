@@ -11,4 +11,6 @@ devices:
 EOF
 fi
 
+adb start-server
+
 firetv-server -c '/config/devices.yaml'
