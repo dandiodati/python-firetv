@@ -406,11 +406,11 @@ class FireTV:
                 try:
                     logging.debug("Trying to connect server: 127.0.0.1:5037")
                     self._adb_client = AdbClient(host="127.0.0.1", port=5037)
-		    logging.debug("Created client local server version: %s", self._adb_client.version())
+                    logging.debug("Created client local server version: %s", self._adb_client.version())
 
                     logging.debug("Trying to connect to device server: %s, port: %s", self.adb_server_ip, self.adb_server_port)
                     self._adb_device = self._adb_client.remote_connect(host=self.adb_server_ip, port=self.adb_server_port)
-			
+
                     self._adb_device = self._adb_client.device(self.host)
                     self._available = bool(self._adb_device)
 
