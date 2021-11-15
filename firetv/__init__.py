@@ -18,10 +18,9 @@ import ppadb
 logging.basicConfig(filename='/usr/local/firetv/log/firetv.log', encoding='utf-8', level=logging.DEBUG)
 
 # Install adb shell if we can, then try the others
-USE_ADB_SHELL = False
-#from adb import adb_commands
-#from adb.sign_pythonrsa import PythonRSASigner
-#from adb.adb_protocol import InvalidChecksumError
+from adb import adb_commands
+from adb.sign_pythonrsa import PythonRSASigner
+from adb.adb_protocol import InvalidChecksumError
 
 
 Signer = PythonRSASigner.FromRSAKeyPath
@@ -486,17 +485,6 @@ class FireTV:
     @property
     def available(self):
         """Check whether the ADB connection is intact."""
-
-        if USE_ADB_SHELL:
-            # adb_shell
-            if not self._adb_device:
-                return False
-
-            return self._adb_device.available
-
-        if not self.adb_server_ip:
-            # python-adb
-            return bool(self._adb)
 
         # pure-python-adb
         try:
