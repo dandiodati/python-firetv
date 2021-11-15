@@ -183,15 +183,7 @@ class FireTV:
         self._adb_device = None  # pure-python-adb && adb_shell
 
         # the methods used for sending ADB commands
-        #if USE_ADB_SHELL:
-        #    # adb_shell
-        #    self.adb_shell = self._adb_shell_adb_shell
-        #    self.adb_streaming_shell = self._adb_shell_adb_shell
-        #elif not self.adb_server_ip:
-        #    # python-adb
-        #    self.adb_shell = self._adb_shell_python_adb
-        #    self.adb_streaming_shell = self._adb_streaming_shell_python_adb
-        #else:
+
         # pure-python-adb
 
         self.adb_shell = self._adb_shell_pure_python_adb
@@ -352,66 +344,21 @@ class FireTV:
         if self.adbkey:
             signer = Signer(self.adbkey)
         try:
-            #if USE_ADB_SHELL:
-                ## adb_shell
-                #host, _, port = self.host.partition(':')
-                #self._adb_device = AdbDeviceTcp(host=host, port=port)
-#
-                ## Connect to the device
-                #connected = False
-                #from adb_shell.exceptions import DeviceAuthError
-                #try:
-                    #if signer:
-                        #connected = self._adb_device.connect(rsa_keys=[signer])
-                    #else:
-                        #connected = self._adb_device.connect()
-                #except DeviceAuthError as err:
-                    #print("DeviceAuthError:", err)
-#
-                #self._available = connected
-#
-            #elif not self.adb_server_ip:
-                ## python-adb
-                #from adb.usb_exceptions import DeviceAuthError
-                #try:
-                    #if self.adbkey:
-                        #signer = Signer(self.adbkey)
-#
-                        ## Connect to the device
-                        #self._adb = adb_commands.AdbCommands().ConnectDevice(serial=self.host, rsa_keys=[signer], default_timeout_ms=9000)
-                    #else:
-                        #self._adb = adb_commands.AdbCommands().ConnectDevice(serial=self.host, default_timeout_ms=9000)
-#
-                    ## ADB connection successfully established
-                    #self._available = True
-#
-                #except socket_error as serr:
-                    #if self._available or always_log_errors:
-                        #if serr.strerror is None:
-                            #serr.strerror = "Timed out trying to connect to ADB device."
-                        #logging.warning("Couldn't connect to host: %s, error: %s", self.host, serr.strerror)
-#
-                    ## ADB connection attempt failed
-                    #self._adb = None
-                    #self._available = False
-#
-                #except DeviceAuthError as err:
-                    #print("DeviceAuthError:", err)
-#
-                #finally:
-                    #return self._available
-
-            #else:
                 # pure-python-adb
                 try:
                     logging.debug("Trying to connect server: 127.0.0.1:5037")
                     self._adb_client = AdbClient(host="127.0.0.1", port=5037)
                     logging.debug("Created client local server version: %s", self._adb_client.version())
 
-                    logging.debug("Trying to connect to device server: %s, port: %s", self.adb_server_ip, self.adb_server_port)
-                    self._adb_device = self._adb_client.remote_connect(host=self.adb_server_ip, port=self.adb_server_port)
+                    logging.debug("Devicei host: %s", self.host)
+                    hostInfo = self.host.split(":")
+                    device_ip = hostInfo[0]
+                    device_port = hostInfo[1]
 
-                    self._adb_device = self._adb_client.device(self.host)
+                    logging.debug("Trying to connect to device: ip: %s, port: %s", device_ip, device_port)
+		    
+                    self._adb_device = self._adb_client.remote_connect(host=device_ip, port=device_port)
+
                     self._available = bool(self._adb_device)
 
                 except:
