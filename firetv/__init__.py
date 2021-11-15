@@ -358,7 +358,6 @@ class FireTV:
                     logging.debug("Trying to connect to device: ip: %s, port: %s", device_ip, device_port)
 		    
                     self._adb_device = self._adb_client.remote_connect(host=device_ip, port=device_port)
-
                     self._available = bool(self._adb_device)
 
                 except:
