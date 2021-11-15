@@ -348,7 +348,7 @@ class FireTV:
 		    
                     self._adb_device = self._adb_client.remote_connect(host=device_ip, port=device_port)
 
-                    if not bool(self._adb_device) 
+                    if not bool(self._adb_device):
                       logging.debug("Trying to connect second time to device: ip: %s, port: %d", device_ip, device_port)
                       self._adb_device = self._adb_client.remote_connect(host=device_ip, port=device_port)
 
