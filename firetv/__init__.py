@@ -19,9 +19,9 @@ logging.basicConfig(filename='/usr/local/firetv/log/firetv.log', encoding='utf-8
 
 # Install adb shell if we can, then try the others
 USE_ADB_SHELL = False
-from adb import adb_commands
-from adb.sign_pythonrsa import PythonRSASigner
-from adb.adb_protocol import InvalidChecksumError
+#from adb import adb_commands
+#from adb.sign_pythonrsa import PythonRSASigner
+#from adb.adb_protocol import InvalidChecksumError
 
 
 Signer = PythonRSASigner.FromRSAKeyPath
@@ -357,7 +357,7 @@ class FireTV:
                       self._available = bool(self._adb_device)
                     except Exception as e:
                       self._available = False
-                      logging.error("Failed to connect: %s ", e)    
+                      logging.error("Failed to connect: %s ", str(e))    
                 finally:
                     return self._available
 

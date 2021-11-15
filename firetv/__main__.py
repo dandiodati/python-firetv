@@ -95,7 +95,7 @@ def add(device_id, host, adbkey='', adb_server_ip='', adb_server_port=5037):
     valid = is_valid_device_id(device_id) and is_valid_host(host)
     if valid:
         devices[device_id] = FireTV(str(host), str(adbkey), str(adb_server_ip), str(adb_server_port))
-        logging.info("Adding device device id: %s, host: %s, serverip: %s, port: %s, adbkey: %s", device_id, host, adb_server_ip, adb_server_port, adbkey);
+        logging.info("Added device device id: %s, host: %s, serverip: %s, port: %s, adbkey: %s", device_id, host, adb_server_ip, adb_server_port, adbkey);
     return valid
 
 
