@@ -13,7 +13,7 @@ fi
 
 mkdir -p /config/keys;
 export ANDROID_VENDOR_KEYS="/config/keys"
-
+echo $ANDROID_VENDOR_KEYS
 adb start-server
 
 firetv-server -c '/config/devices.yaml'
