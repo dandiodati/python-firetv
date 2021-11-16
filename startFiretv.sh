@@ -11,15 +11,9 @@ devices:
 EOF
 fi
 
-if [ -f /config/keys ]
-then
-
-mkdir -p /root/.android;
-cp -f /config/keys/* .android;
-fi
+mkdir -p /config/keys;
+export ANDROID_VENDOR_KEYS="/config/keys"
 
 adb start-server
-mkdir -p /config/keys;
-cp -f /root/.android/* /config/keys;
 
 firetv-server -c '/config/devices.yaml'
