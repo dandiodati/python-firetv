@@ -15,7 +15,7 @@ mkdir -p /config/keys;
 export ANDROID_VENDOR_KEYS="/config/keys"
 echo $ANDROID_VENDOR_KEYS
 
-if [ -f /config/keys/adbkey ]
+if [ -e /config/keys/adbkey ]
 then
 cp -f /config/keys/* /root/.android
 fi
