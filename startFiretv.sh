@@ -11,7 +11,8 @@ devices:
 EOF
 fi
 
-mkdir -p /config/keys;
+mkdir -p /config/keysx
+mkdir -p  /root/.android
 export ANDROID_VENDOR_KEYS="/config/keys"
 echo $ANDROID_VENDOR_KEYS
 
