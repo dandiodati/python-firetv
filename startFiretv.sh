@@ -21,8 +21,8 @@ then
 cp -f /config/keys/* /root/.android
 fi
  
-#adb start-server
-#cp -f /root/.android/* /config/keys
+adb start-server
+cp -f /root/.android/* /config/keys
 
 
 firetv-server -c '/config/devices.yaml'
